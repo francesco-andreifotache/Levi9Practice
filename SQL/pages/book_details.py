@@ -58,3 +58,31 @@ elif data:
 
 else:
     st.info("No book details found")
+
+st.divider()
+
+st.header("Search Books by Author")
+
+author_name = st.text_input(
+    "Author Name"
+)
+
+if st.button("Search Author"):
+
+    if not author_name.strip():
+        st.warning("Please enter an author name")
+
+    else:
+        data, error = APIClient.get(
+            f"/books/author/{author_name}"
+        )
+
+        if error:
+            st.error(error)
+
+        else:
+            st.success(
+                f"Found {len(data)} books"
+            )
+
+            st.dataframe(data)
